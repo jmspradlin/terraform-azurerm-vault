@@ -1,6 +1,25 @@
 # ---------------------------------------------------------------------------------------------------------------------
 # REQUIRED PARAMETERS
 # ---------------------------------------------------------------------------------------------------------------------
+variable "state_storage_name" {
+  type = string
+  description = "Name of the storage account hosting the tfstate files"
+}
+
+variable "state_rg_name" {
+  type = string
+  description = "Name of the resource group for the tfstate storage account"
+}
+
+variable "image_name" {
+  type = string
+  description = "Name of the image with Vault and Consul installed"
+}
+
+variable "image_rg_name" {
+  type = string
+  description = "Resource Group Name housing the Vault/Consul image"
+}
 
 variable "subscription_id" {
   description = "The Azure subscription ID"
@@ -22,17 +41,17 @@ variable "resource_group_name" {
   description = "The name of the Azure resource group consul will be deployed into. This RG should already exist"
 }
 
-variable "storage_account_name" {
-  description = "The name of an Azure Storage Account. This SA should already exist"
-}
+# variable "storage_account_name" {
+#   description = "The name of an Azure Storage Account. This SA should already exist"
+# }
 
-variable "storage_account_key" {
-  description = "The key for storage_account_name."
-}
+# variable "storage_account_key" {
+#   description = "The key for storage_account_name."
+# }
 
-variable "image_uri" {
-  description = "The URI to the Azure image that should be deployed to the consul cluster."
-}
+# variable "image_id" {
+#   description = "The URI to the Azure image that should be deployed to the consul cluster."
+# }
 
 variable "key_data" {
   description = "The SSH public key that will be added to SSH authorized_users on the consul instances"
@@ -40,7 +59,7 @@ variable "key_data" {
 
 variable "allowed_inbound_cidr_blocks" {
   description = "A list of CIDR-formatted IP address ranges from which the Azure Instances will allow connections to Consul"
-  type        = "list"
+  type        = list
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -57,7 +76,12 @@ variable "address_space" {
   default = "10.0.0.0/16"
 }
 
-variable "subnet_address" {
+variable "consul_subnet_address" {
+  description = "The subnet that consul resources will be deployed into"
+  default = "10.0.11.0/24"
+}
+
+variable "vault_subnet_address" {
   description = "The subnet that consul resources will be deployed into"
   default = "10.0.10.0/24"
 }

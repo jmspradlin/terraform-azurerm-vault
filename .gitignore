@@ -3,6 +3,13 @@
 terraform.tfstate
 terraform.tfvars
 *.tfstate*
+*.tfvars*
+backend.tf
+state
+
+# Cert files
+certs
+*.pem
 
 # OS X files
 .history

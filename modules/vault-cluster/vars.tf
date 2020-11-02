@@ -39,6 +39,11 @@ variable "key_data" {
   description = "The SSH public key that will be added to SSH authorized_users on the consul instances"
 }
 
+variable "default_password" {
+  type = string
+  description = "Default resource password. Will not be used after configuration, but should still be unique, robust and preferably random."
+}
+
 variable "custom_data" {
   description = "A Custom Data script to execute while the server is booting. We remmend passing in a bash script that executes the run-consul script, which should have been installed in the Consul Image by the install-consul module."
 }
@@ -95,13 +100,18 @@ variable "cluster_tag_value" {
 
 variable "subnet_ids" {
   description = "The subnet IDs into which the Azure Instances should be deployed. We recommend one subnet ID per node in the cluster_size variable. At least one of var.subnet_ids or var.availability_zones must be non-empty."
-  type        = "list"
+  type        = list
   default     = []
+}
+
+variable "consul_subnet" {
+  type = string
+  description = "The inbound CIDR range from Consul"
 }
 
 variable "allowed_ssh_cidr_blocks" {
   description = "A list of CIDR-formatted IP address ranges from which the Azure Instances will allow SSH connections"
-  type        = "list"
+  type        = list
   default     = []
 }
 
